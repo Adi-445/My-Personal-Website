@@ -4,8 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Yethin’s Website</title>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDs3SaPKm2A2LFYa4u8fP7hJ0ozfvB4D1I",
+            authDomain: "login-page-176f1.firebaseapp.com",
+            projectId: "login-page-176f1",
+            storageBucket: "login-page-176f1.appspot.com",
+            messagingSenderId: "1012127170803",
+            appId: "1:1012127170803:web:b42ca6d5456913c78ef786",
+            measurementId: "G-5VNNELLTTY"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Function to handle Google Sign-In
+        async function signInWithGoogle() {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                console.log("User signed in: ", user);
+
+                // Optionally, you can redirect or display user information
+                document.getElementById('message').innerText = `Welcome, ${user.displayName}!`;
+            } catch (error) {
+                console.error("Error signing in: ", error);
+                document.getElementById('message').innerText = `Error: ${error.message}`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('googleSignIn').addEventListener('click', signInWithGoogle);
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,8 +95,7 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <p>Please log in with your Google account and assign a username.</p>
-
+        <p>Please sign in with your Google account and assign a username.</p>
         <!-- Google Sign-In Button -->
         <button class="login-button" id="googleSignIn">Sign in with Google</button>
 
@@ -71,52 +108,5 @@
         <!-- Message Display -->
         <p id="message"></p>
     </div>
-
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDs3SaPKm2A2LFYa4u8fP7hJ0ozfvB4D1I",
-            authDomain: "login-page-176f1.firebaseapp.com",
-            projectId: "login-page-176f1",
-            storageBucket: "login-page-176f1.appspot.com",
-            messagingSenderId: "1012127170803",
-            appId: "1:1012127170803:web:b42ca6d5456913c78ef786",
-            measurementId: "G-5VNNELLTTY"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        // Initialize Firebase Authentication and get a reference to the service
-        const auth = firebase.auth();
-
-        document.getElementById('googleSignIn').addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then((result) => {
-                // The signed-in user info.
-                const user = result.user;
-
-                // Get the username input
-                const username = document.getElementById('username').value;
-
-                if (username) {
-                    // Update the user's profile with the username
-                    user.updateProfile({
-                        displayName: username
-                    }).then(() => {
-                        document.getElementById('message').innerText = `Welcome, ${user.displayName}!`;
-                        // Redirect or display a personalized message
-                        // window.location.href = '/secret.html'; // Example redirection
-                    }).catch((error) => {
-                        document.getElementById('message').innerText = `Error: ${error.message}`;
-                    });
-                } else {
-                    document.getElementById('message').innerText = 'Please enter a username.';
-                }
-            }).catch((error) => {
-                document.getElementById('message').innerText = `Error: ${error.message}`;
-            });
-        });
-    </script>
 </body>
 </html>
