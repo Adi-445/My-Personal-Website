@@ -3,48 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yethin's Webpage</title>
+    <title>Yethin - The Digital Hitman</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f8ff;
             color: #333;
             margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4a90e2;
+            color: white;
             padding: 20px;
             text-align: center;
         }
+        section {
+            padding: 20px;
+            margin: 0 10%;
+        }
         h1, h2 {
-            margin-bottom: 20px;
+            color: #4a90e2;
         }
-        .section {
-            margin-bottom: 40px;
+        footer {
+            background-color: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
-        #friends-section {
+        .projects {
+            list-style-type: none;
+            padding: 0;
+        }
+        .projects li {
+            background-color: #eaf0f9;
+            border: 1px solid #d0dce0;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .friends-section {
             margin-top: 50px;
+            text-align: center;
+        }
+        .friends-section h2 {
+            margin-bottom: 10px;
+        }
+        .friends-section button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <h1>Yethin (Nicknamed: The Digital Hitman)</h1>
-    <div class="section">
+    <header>
+        <h1>Yethin (The Digital Hitman)</h1>
+        <p>Welcome to my personal webpage!</p>
+    </header>
+
+    <section id="about">
         <h2>About Me</h2>
-        <p>Hello, I am Yethin, also known as The Digital Hitman.</p>
-    </div>
-    
-    <div class="section">
+        <p>Hello! I'm Yethin, also known as The Digital Hitman. I’m passionate about technology and creative solutions. Here, you'll find information about my projects and how to get in touch with me.</p>
+    </section>
+
+    <section id="projects">
         <h2>Projects</h2>
-        <p><strong>Media Archive:</strong> (taken down due to Copyright Infringement) - Used to Download and Archive Movies, Songs, Proprietary Software.</p>
-        <p><strong>ESP32-Physical VPN:</strong> A project utilizing the ESP32 chip to create a physical VPN device.</p>
-    </div>
-    
-    <div class="section">
+        <ul class="projects">
+            <li><strong>Media Archive</strong>: Used to download and archive movies, songs, and proprietary software. (Taken down due to copyright infringement)</li>
+            <li><strong>ESP32-Physical VPN</strong>: A project involving a VPN setup using ESP32 hardware.</li>
+        </ul>
+    </section>
+
+    <section id="contact">
         <h2>Contact</h2>
-        <p>Email: yethin129@gmail.com</p>
-    </div>
-    
-    <div id="friends-section">
+        <p>If you'd like to get in touch, you can email me at: <a href="mailto:yethin129@gmail.com">yethin129@gmail.com</a></p>
+    </section>
+
+    <section class="friends-section">
         <h2>For Yethin’s friends only</h2>
         <button onclick="window.location.href='/login.html'">Go to Login</button>
-    </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Yethin. All rights reserved.</p>
+    </footer>
 </body>
 </html>
