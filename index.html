@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with Google</title>
+    <title>Yethin's Webpage</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,91 +13,38 @@
             padding: 20px;
             text-align: center;
         }
-        #login-page, #secret-page {
-            display: none;
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        #friends-section {
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
-    <div id="login-page">
-        <h1>Login with Google</h1>
-        <button id="login-button">Login with Google</button>
+    <h1>Yethin (Nicknamed: The Digital Hitman)</h1>
+    <div class="section">
+        <h2>About Me</h2>
+        <p>Hello, I am Yethin, also known as The Digital Hitman.</p>
     </div>
     
-    <div id="secret-page">
-        <h1>Welcome, <span id="user-name"></span>!</h1>
-        <p>Your secret message is: <strong>"The treasure lies within."</strong></p>
-        <button id="logout-button">Logout</button>
+    <div class="section">
+        <h2>Projects</h2>
+        <p><strong>Media Archive:</strong> (taken down due to Copyright Infringement) - Used to Download and Archive Movies, Songs, Proprietary Software.</p>
+        <p><strong>ESP32-Physical VPN:</strong> A project utilizing the ESP32 chip to create a physical VPN device.</p>
     </div>
-
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDs3SaPKm2A2LFYa4u8fP7hJ0ozfvB4D1I",
-            authDomain: "login-page-176f1.firebaseapp.com",
-            projectId: "login-page-176f1",
-            storageBucket: "login-page-176f1.appspot.com",
-            messagingSenderId: "1012127170803",
-            appId: "1:1012127170803:web:b42ca6d5456913c78ef786",
-            measurementId: "G-5VNNELLTTY"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        const loginPage = document.getElementById('login-page');
-        const secretPage = document.getElementById('secret-page');
-        const loginButton = document.getElementById('login-button');
-        const logoutButton = document.getElementById('logout-button');
-        const userName = document.getElementById('user-name');
-
-        // Google login
-        loginButton.addEventListener('click', () => {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then(result => {
-                    showSecretPage(result.user.displayName);
-                })
-                .catch(error => {
-                    console.error("Login failed:", error);
-                });
-        });
-
-        // Logout
-        logoutButton.addEventListener('click', () => {
-            signOut(auth).then(() => {
-                showLoginPage();
-            }).catch(error => {
-                console.error("Logout failed:", error);
-            });
-        });
-
-        // Show secret page
-        function showSecretPage(name) {
-            loginPage.style.display = 'none';
-            secretPage.style.display = 'block';
-            userName.textContent = name;
-        }
-
-        // Show login page
-        function showLoginPage() {
-            secretPage.style.display = 'none';
-            loginPage.style.display = 'block';
-        }
-
-        // Check user state
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                showSecretPage(user.displayName);
-            } else {
-                showLoginPage();
-            }
-        });
-    </script>
+    
+    <div class="section">
+        <h2>Contact</h2>
+        <p>Email: yethin129@gmail.com</p>
+    </div>
+    
+    <div id="friends-section">
+        <h2>For Yethin’s friends only</h2>
+        <button onclick="window.location.href='/login.html'">Go to Login</button>
+    </div>
 </body>
 </html>
