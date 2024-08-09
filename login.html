@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Yethin’s Website</title>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4a90e2;
+        }
+        .login-button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #d0dce0;
+        }
+        #message {
+            color: #e74c3c; /* Error color */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <p>Please log in with your Google account and assign a username.</p>
+
+        <!-- Google Sign-In Button -->
+        <button class="login-button" id="googleSignIn">Sign in with Google</button>
+
+        <!-- Username Input -->
+        <div class="form-group">
+            <label for="username">Assigned Username:</label>
+            <input type="text" id="username" placeholder="Enter your username">
+        </div>
+
+        <!-- Message Display -->
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDs3SaPKm2A2LFYa4u8fP7hJ0ozfvB4D1I",
+            authDomain: "login-page-176f1.firebaseapp.com",
+            projectId: "login-page-176f1",
+            storageBucket: "login-page-176f1.appspot.com",
+            messagingSenderId: "1012127170803",
+            appId: "1:1012127170803:web:b42ca6d5456913c78ef786",
+            measurementId: "G-5VNNELLTTY"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firebase Authentication and get a reference to the service
+        const auth = firebase.auth();
+
+        document.getElementById('googleSignIn').addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then((result) => {
+                // The signed-in user info.
+                const user = result.user;
+
+                // Get the username input
+                const username = document.getElementById('username').value;
+
+                if (username) {
+                    // Update the user's profile with the username
+                    user.updateProfile({
+                        displayName: username
+                    }).then(() => {
+                        document.getElementById('message').innerText = `Welcome, ${user.displayName}!`;
+                        // Redirect or display a personalized message
+                        // window.location.href = '/secret.html'; // Example redirection
+                    }).catch((error) => {
+                        document.getElementById('message').innerText = `Error: ${error.message}`;
+                    });
+                } else {
+                    document.getElementById('message').innerText = 'Please enter a username.';
+                }
+            }).catch((error) => {
+                document.getElementById('message').innerText = `Error: ${error.message}`;
+            });
+        });
+    </script>
+</body>
+</html>
