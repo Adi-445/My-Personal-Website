@@ -3,76 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yethin - The Digital Hitman</title>
+    <title>Login with Google</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f8ff;
             color: #333;
             margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #4a90e2;
-            color: white;
             padding: 20px;
             text-align: center;
         }
-        section {
-            padding: 20px;
-            margin: 0 10%;
-        }
-        h1, h2 {
-            color: #4a90e2;
-        }
-        footer {
-            background-color: #4a90e2;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .projects {
-            list-style-type: none;
-            padding: 0;
-        }
-        .projects li {
-            background-color: #eaf0f9;
-            border: 1px solid #d0dce0;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
+        #login-page, #secret-page {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Yethin (The Digital Hitman)</h1>
-        <p>Welcome to my personal webpage!</p>
-    </header>
+    <div id="login-page">
+        <h1>Login with Google</h1>
+        <button id="login-button">Login with Google</button>
+    </div>
+    
+    <div id="secret-page">
+        <h1>Welcome, <span id="user-name"></span>!</h1>
+        <p>Your secret message is: <strong>"The treasure lies within."</strong></p>
+        <button id="logout-button">Logout</button>
+    </div>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm Yethin, also known as The Digital Hitman. I’m passionate about technology and creative solutions. Here, you'll find information about my projects and how to get in touch with me.</p>
-    </section>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-    <section id="projects">
-        <h2>Projects</h2>
-        <ul class="projects">
-            <li><strong>Media Archive</strong>: Used to download and archive movies, songs, and proprietary software. (Taken down due to copyright infringement)</li>
-            <li><strong>ESP32-Physical VPN</strong>: A project involving a VPN setup using ESP32 hardware.</li>
-        </ul>
-    </section>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDs3SaPKm2A2LFYa4u8fP7hJ0ozfvB4D1I",
+            authDomain: "login-page-176f1.firebaseapp.com",
+            projectId: "login-page-176f1",
+            storageBucket: "login-page-176f1.appspot.com",
+            messagingSenderId: "1012127170803",
+            appId: "1:1012127170803:web:b42ca6d5456913c78ef786",
+            measurementId: "G-5VNNELLTTY"
+        };
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>If you'd like to get in touch, you can email me at: <a href="mailto:yethin129@gmail.com">yethin129@gmail.com</a></p>
-    </section>
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-    <footer>
-        <p>&copy; 2024 Yethin. All rights reserved.</p>
-    </footer>
+        const loginPage = document.getElementById('login-page');
+        const secretPage = document.getElementById('secret-page');
+        const loginButton = document.getElementById('login-button');
+        const logoutButton = document.getElementById('logout-button');
+        const userName = document.getElementById('user-name');
+
+        // Google login
+        loginButton.addEventListener('click', () => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then(result => {
+                    showSecretPage(result.user.displayName);
+                })
+                .catch(error => {
+                    console.error("Login failed:", error);
+                });
+        });
+
+        // Logout
+        logoutButton.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                showLoginPage();
+            }).catch(error => {
+                console.error("Logout failed:", error);
+            });
+        });
+
+        // Show secret page
+        function showSecretPage(name) {
+            loginPage.style.display = 'none';
+            secretPage.style.display = 'block';
+            userName.textContent = name;
+        }
+
+        // Show login page
+        function showLoginPage() {
+            secretPage.style.display = 'none';
+            loginPage.style.display = 'block';
+        }
+
+        // Check user state
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                showSecretPage(user.displayName);
+            } else {
+                showLoginPage();
+            }
+        });
+    </script>
 </body>
 </html>
